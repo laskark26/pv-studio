@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { ACC_ARTICLES, ACC_LEVELS, ACCArticle } from '../data/accArticles';
 import { 
   ArrowLeft, ArrowRight, Calendar, Layers, ChevronDown, ChevronUp, 
-  HelpCircle, BookOpen, AlertCircle, FileText, CheckCircle2, Share2, Sparkles, Network
+  HelpCircle, BookOpen, AlertCircle, FileText, CheckCircle2, Share2, Sparkles, Network,
+  Zap, Table, Clock, FileCheck, Calculator, Scale, ArrowDown, Activity, Check, ShieldCheck
 } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
 
@@ -116,6 +117,276 @@ export default function ACCArticleDetail() {
                 ))}
               </ul>
             </div>
+
+            {/* NIVEAU 1 : SCHÉMA / DIAGRAMME VISUEL (ZÉRO ÉQUATION) */}
+            {article.schemaDiagram && (
+              <div className="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-3xl p-6 md:p-8 border border-blue-800/60 shadow-xl space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#CCFF00] text-slate-900 flex items-center justify-center font-bold">
+                    <Network className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-mono tracking-wider text-[#CCFF00]">Schéma explicatif visuel</span>
+                    <h3 className="text-xl md:text-2xl font-bold">{article.schemaDiagram.title}</h3>
+                  </div>
+                </div>
+                {article.schemaDiagram.subtitle && (
+                  <p className="text-sm text-blue-200">{article.schemaDiagram.subtitle}</p>
+                )}
+                <div className="grid md:grid-cols-3 gap-4 pt-2">
+                  {article.schemaDiagram.steps.map((st, i) => (
+                    <div key={i} className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10 relative flex flex-col justify-between space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="w-8 h-8 rounded-full bg-[#CCFF00] text-slate-900 font-extrabold flex items-center justify-center text-sm">
+                          {st.number}
+                        </span>
+                        {st.badge && (
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-500/30 text-blue-200 border border-blue-400/30 px-2 py-0.5 rounded-full">
+                            {st.badge}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white text-base mb-1">{st.title}</h4>
+                        <p className="text-xs text-slate-300 leading-relaxed">{st.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* NIVEAU 2 : TABLEAU DE CRITÈRES D'ÉVALUATION */}
+            {article.criteriaTable && (
+              <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                    <Table className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-mono tracking-wider text-emerald-600 font-bold">Grille d'évaluation & Tableau de critères</span>
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-900">{article.criteriaTable.title}</h3>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto rounded-2xl border border-slate-200">
+                  <table className="w-full text-left text-xs md:text-sm">
+                    <thead className="bg-slate-900 text-white font-bold text-xs uppercase tracking-wider">
+                      <tr>
+                        {article.criteriaTable.headers.map((h, i) => (
+                          <th key={i} className="p-3.5 border-b border-slate-800">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {article.criteriaTable.rows.map((row, i) => (
+                        <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                          <td className="p-3.5 font-bold text-slate-900 bg-slate-50/80">{row.criterion}</td>
+                          <td className="p-3.5 text-slate-700">{row.optionA}</td>
+                          <td className="p-3.5 text-slate-700">{row.optionB}</td>
+                          <td className="p-3.5 font-semibold text-emerald-700 bg-emerald-50/60">{row.recommendation}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* NIVEAU 2 : EXEMPLE CHIFFRÉ COMPLET */}
+            {article.quantifiedExample && (
+              <div className="bg-gradient-to-br from-emerald-900 to-slate-900 text-white rounded-3xl p-6 md:p-8 border border-emerald-700/50 shadow-xl space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#CCFF00] text-slate-900 flex items-center justify-center font-bold">
+                    <Calculator className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-mono tracking-wider text-[#CCFF00]">Cas d'école · Exemple chiffré complet</span>
+                    <h3 className="text-xl md:text-2xl font-bold">{article.quantifiedExample.title}</h3>
+                  </div>
+                </div>
+
+                <p className="text-sm text-emerald-100 leading-relaxed bg-white/10 p-4 rounded-2xl border border-white/10">
+                  {article.quantifiedExample.context}
+                </p>
+
+                <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                  {article.quantifiedExample.metrics.map((m, i) => (
+                    <div key={i} className="bg-slate-950/80 p-4 rounded-2xl border border-emerald-500/30 text-center space-y-1">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-300 block">{m.label}</span>
+                      <span className="text-xl md:text-2xl font-black text-[#CCFF00] block">{m.value}</span>
+                      {m.detail && <span className="text-[10px] text-slate-400 block">{m.detail}</span>}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="text-xs md:text-sm text-slate-200 leading-relaxed pt-2 border-t border-white/10 whitespace-pre-line">
+                  {article.quantifiedExample.breakdown}
+                </div>
+              </div>
+            )}
+
+            {/* NIVEAU 3 : PROCÉDURE ÉTAPE PAR ÉTAPE (PIÈCES & DÉLAIS) */}
+            {article.stepByStepProcedure && (
+              <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-mono tracking-wider text-amber-600 font-bold">Feuille de route & Procédure administrative</span>
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-900">{article.stepByStepProcedure.title}</h3>
+                  </div>
+                </div>
+
+                <div className="space-y-6 relative before:absolute before:left-6 before:top-4 before:bottom-4 before:w-0.5 before:bg-slate-200">
+                  {article.stepByStepProcedure.steps.map((st, i) => (
+                    <div key={i} className="relative pl-12 space-y-2">
+                      <div className="absolute left-0 top-0 w-12 h-12 rounded-full bg-slate-900 text-[#CCFF00] font-black flex items-center justify-center text-sm border-4 border-white shadow-md">
+                        {st.stepNumber}
+                      </div>
+
+                      <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-3">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <h4 className="font-bold text-slate-900 text-base">{st.title}</h4>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-mono font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full border border-amber-200 flex items-center gap-1">
+                              <Clock className="w-3 h-3" /> Délai : {st.delay}
+                            </span>
+                            <span className="text-xs font-semibold bg-slate-200 text-slate-700 px-2.5 py-1 rounded-full">
+                              {st.responsibleParty}
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="text-xs md:text-sm text-slate-700 leading-relaxed font-normal">
+                          {st.desc}
+                        </p>
+
+                        {st.requiredDocs.length > 0 && (
+                          <div className="pt-2 border-t border-slate-200/80">
+                            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5 flex items-center gap-1">
+                              <FileCheck className="w-3.5 h-3.5 text-amber-600" /> Pièces & Justificatifs requis :
+                            </span>
+                            <div className="flex flex-wrap gap-1.5">
+                              {st.requiredDocs.map((doc, dIdx) => (
+                                <span key={dIdx} className="text-xs bg-white text-slate-800 font-medium px-2.5 py-1 rounded-lg border border-slate-300">
+                                  📄 {doc}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* NIVEAU 4 : MODÈLE ET CALCUL REPRODUCTIBLE */}
+            {article.reproducibleModel && (
+              <div className="bg-slate-950 text-white rounded-3xl p-6 md:p-8 border border-purple-500/40 shadow-2xl space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold border border-purple-500/40">
+                    <Calculator className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-mono tracking-wider text-purple-400">Modélisation mathématique & Calcul reproductible</span>
+                    <h3 className="text-xl md:text-2xl font-bold">{article.reproducibleModel.title}</h3>
+                  </div>
+                </div>
+
+                {/* Formula display */}
+                <div className="bg-slate-900 p-5 rounded-2xl border border-purple-500/30 font-mono text-xs md:text-sm text-[#CCFF00] overflow-x-auto">
+                  <span className="text-slate-400 text-[10px] block uppercase font-sans font-bold mb-1">Formule mathématique de référence :</span>
+                  {article.reproducibleModel.formulaOrMethod}
+                </div>
+
+                {/* Variables Legend */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-300">Légende des variables d'entrée :</h4>
+                  <div className="grid sm:grid-cols-2 gap-2 text-xs">
+                    {article.reproducibleModel.variables.map((v, i) => (
+                      <div key={i} className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex items-start justify-between gap-2">
+                        <div>
+                          <span className="font-mono font-bold text-white">{v.name}</span> <span className="text-slate-400 text-[10px]">({v.unit})</span>
+                          <p className="text-slate-300 text-[11px]">{v.description}</p>
+                        </div>
+                        <span className="font-mono text-[#CCFF00] text-xs bg-slate-950 px-2 py-0.5 rounded border border-slate-800 shrink-0">
+                          {v.sampleValue}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Step by step worked calculation */}
+                <div className="space-y-2 pt-2 border-t border-slate-800">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-300">Déroulé étape par étape du calcul :</h4>
+                  <div className="space-y-2 text-xs text-slate-300">
+                    {article.reproducibleModel.stepByStepCalculation.map((stepStr, i) => (
+                      <div key={i} className="bg-slate-900 p-3 rounded-xl border border-slate-800 font-mono leading-relaxed">
+                        <span className="text-purple-400 font-bold mr-2">Étape {i + 1}:</span>
+                        {stepStr}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Outcome */}
+                <div className="bg-purple-950/60 p-4 rounded-2xl border border-purple-500/50 flex items-center justify-between gap-4">
+                  <span className="text-xs font-bold text-purple-200">Résultat issu du modèle :</span>
+                  <span className="text-lg md:text-xl font-black text-[#CCFF00] font-mono">{article.reproducibleModel.outcome}</span>
+                </div>
+              </div>
+            )}
+
+            {/* NIVEAU 4 : POSITION ARGUMENTÉE / ARBITRAGE TECHNIQUE */}
+            {article.argumentedPosition && (
+              <div className="bg-white rounded-3xl p-6 md:p-8 border-2 border-purple-600 shadow-lg space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+                    <Scale className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-mono tracking-wider text-purple-600 font-bold">Position d'expert & Arbitrage technique</span>
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-900">{article.argumentedPosition.title}</h3>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Le débat technique :</span>
+                  <p className="text-sm font-semibold text-slate-800">{article.argumentedPosition.debate}</p>
+                </div>
+
+                <div className="bg-purple-50 p-5 rounded-2xl border border-purple-200 space-y-2">
+                  <span className="text-xs font-extrabold text-purple-900 uppercase tracking-wider flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-purple-600" /> Notre position recommandée :
+                  </span>
+                  <p className="text-base font-bold text-purple-950 leading-relaxed">
+                    {article.argumentedPosition.ourPosition}
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">Arguments clés à l'appui :</span>
+                  <ul className="space-y-2">
+                    {article.argumentedPosition.keyArguments.map((arg, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-xs md:text-sm text-slate-800 font-medium">
+                        <Check className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
+                        <span>{arg}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-slate-900 text-white p-5 rounded-2xl text-xs leading-relaxed space-y-1">
+                  <span className="font-bold text-[#CCFF00] uppercase tracking-wider block text-[11px]">Réponse aux contre-arguments classiques :</span>
+                  <p className="text-slate-300">{article.argumentedPosition.counterArgumentsAnswered}</p>
+                </div>
+              </div>
+            )}
 
             {/* DISPOSITIF 3 : CORPS EN PROFONDEUR CROISSANTE */}
             <div className="space-y-10">

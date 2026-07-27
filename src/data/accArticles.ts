@@ -18,6 +18,57 @@ export interface ACCArticle {
     exampleBox?: { title: string; content: string };
     linkToMore?: { label: string; slug: string };
   }[];
+  schemaDiagram?: {
+    title: string;
+    subtitle?: string;
+    steps: {
+      number: string;
+      title: string;
+      desc: string;
+      badge?: string;
+    }[];
+  };
+  criteriaTable?: {
+    title: string;
+    headers: string[];
+    rows: {
+      criterion: string;
+      optionA: string;
+      optionB: string;
+      recommendation: string;
+    }[];
+  };
+  quantifiedExample?: {
+    title: string;
+    context: string;
+    metrics: { label: string; value: string; detail?: string }[];
+    breakdown: string;
+  };
+  stepByStepProcedure?: {
+    title: string;
+    steps: {
+      stepNumber: number;
+      title: string;
+      desc: string;
+      delay: string;
+      requiredDocs: string[];
+      responsibleParty: string;
+    }[];
+  };
+  reproducibleModel?: {
+    title: string;
+    formulaOrMethod: string;
+    variables: { name: string; unit: string; description: string; sampleValue: string }[];
+    stepByStepCalculation: string[];
+    outcome: string;
+  };
+  argumentedPosition?: {
+    title: string;
+    debate: string;
+    ourPosition: string;
+    keyArguments: string[];
+    counterArgumentsAnswered: string;
+  };
   glossaryTerms?: { term: string; definition: string }[];
   relatedLinks: { title: string; slug: string; level: number; relationType: 'montée' | 'rattrapage' | 'latéral' }[];
   hasCalculator?: 'tacc' | 'roi';
@@ -72,39 +123,68 @@ export const ACC_ARTICLES: ACCArticle[] = [
     level: 1,
     levelLabel: "1 · Comprendre",
     question: "« C'est quoi, au juste ? »",
-    readTime: "4 min",
+    readTime: "7 min",
     lastUpdated: "12 septembre 2026",
     categoryTag: "Comparatif",
     wave: 1,
-    summary: "Découvrez les distinctions clés entre valoriser son énergie sur son propre compteur unique ou la partager virtuellement avec plusieurs voisins via le réseau Enedis.",
+    summary: "Découvrez les distinctions fondamentales entre consommer son énergie sur son propre compteur unique et la partager virtuellement entre plusieurs voisins sur le réseau public Enedis.",
     prerequisites: [],
     essentiel: [
-      "L'autoconsommation individuelle se limite au périmètre physique d'un seul compteur électrique (PRM).",
-      "L'Autoconsommation Collective (ACC) utilise le réseau public Enedis pour distribuer virtuellement l'électricité entre plusieurs consommateurs.",
-      "L'ACC permet d'éviter l'écrêtage ou la revente à bas prix en partageant le surplus solaire avec des voisins consommateurs."
+      "L'autoconsommation individuelle est strictement confinée au périmètre électrique physique d'un unique compteur (PRM).",
+      "L'Autoconsommation Collective (ACC) utilise le réseau public Enedis pour allouer virtuellement l'électricité entre plusieurs bâtiments distants.",
+      "L'ACC supprime le besoin de câblage privé et évite le gaspillage du surplus solaire en le revendant localement à des voisins consommateurs."
     ],
+    schemaDiagram: {
+      title: "Flux d'électricité vs allocation virtuelle de données",
+      subtitle: "Comment les compteurs Linky transforment la distribution locale sans aucun travail physique",
+      steps: [
+        {
+          number: "01",
+          title: "Centrale Productrice",
+          desc: "Les panneaux solaires injectent l'électricité sur le réseau public d'électricité Enedis via le compteur Linky de la centrale.",
+          badge: "Physique"
+        },
+        {
+          number: "02",
+          title: "Réseau Public Enedis",
+          desc: "Les électrons empruntent la ligne réseau classique. Aucun câble privé n'est tiré entre les bâtiments.",
+          badge: "Infrastructures"
+        },
+        {
+          number: "03",
+          title: "Partage Virtuel PMO",
+          desc: "Toutes les 30 minutes, Enedis calcule la part exacte d'énergie affectée à chaque compteur voisin abonné à la boucle.",
+          badge: "Virtuel / Données"
+        }
+      ]
+    },
     contentSections: [
       {
-        h2: "Périmètre physique vs partage virtuel par le réseau",
-        body: "Dans une installation photovoltaïque individuelle classique, les panneaux solaires sont raccordés directement sur le TGBT ou le tableau électrique du bâtiment. L'électricité produite est consommée en priorité par les appareils connectés sur ce même compteur. En revanche, l'Autoconsommation Collective (ACC) abolit cette contrainte physique : la centrale injecte son énergie sur le réseau public de distribution (Enedis), et l'énergie est attribuée de façon virtuelle, par calcul informatique, à plusieurs consommateurs abonnés.",
+        h2: "Périmètre physique vs partage virtuel par le réseau public",
+        body: "Dans une installation photovoltaïque individuelle classique, les panneaux solaires sont raccordés directement sur le Tableau Général Basse Tension (TGBT) ou le tableau électrique d'un bâtiment unique. L'électricité produite est consommée en temps réel par les équipements électriques branchés derrière ce même compteur. Lorsque la production dépasse la consommation du site, le surplus est soit injecté sur le réseau national en revente totale ou en surplus à tarif réglementé, soit perdu par écrêtage si aucune solution de stockage n'est installée.\n\nEn revanche, l'Autoconsommation Collective (ACC) abolit cette frontière physique. La centrale photovoltaïque injecte 100% de son énergie sur le réseau public de distribution géré par Enedis. Grâce au maillage national des compteurs communicants Linky, l'énergie produite est affectée de façon virtuelle, par un algorithme informatique de répartition, à un ensemble de consommateurs membres du périmètre d'opération. La molécule d'électricité suit la physique du réseau, tandis que la valeur économique et environnementale du kWh est attribuée localement à des voisins abonnés à l'opération.",
         exampleBox: {
           title: "Exemple concret : Bâtiment tertiaire et commerce voisin",
-          content: "Un bâtiment administratif de bureau produit 150 kWh un dimanche ensoleillé alors que ses locaux sont fermés. En individuel, cette énergie serait vendue en totalité au réseau à tarif de surplus. En ACC, elle est réattribuée automatiquement au supermarché voisin ouvert le dimanche, réduisant sa facture en direct."
+          content: "Un bâtiment administratif de bureau produit 200 kWh un dimanche ensoleillé alors que ses bureaux sont fermés. En individuel, cette énergie serait vendue en totalité au réseau au tarif fixe de surplus (souvent inférieur à 0,08 €/kWh). En ACC, cette production est réattribuée automatiquement au supermarché voisin ouvert le dimanche, qui achète ce kWh local à 0,12 €/kWh au lieu de payer 0,22 €/kWh son fournisseur national. Le producteur gagne davantage, et le consommateur économise 45% sur son kWh !"
         }
       },
       {
-        h2: "L'absence de câble privé : un avantage réseau majeur",
-        body: "Une idée reçue fréquente consiste à imaginer la pose d'un câble privé entre les bâtiments pour partager le courant. Outre un coût de génie civil exorbitant, la création de réseaux électriques privés traversant le domaine public est strictement interdite. L'ACC s'appuie à 100% sur le réseau Enedis existant, sans aucun travaux de raccordement physique entre les participants.",
+        h2: "L'absence de câble privé : la puissance du réseau partagé",
+        body: "Une idée reçue extrêmement répandue consiste à imaginer qu'une opération d'autoconsommation entre voisins nécessite la pose de tranchées, de fourreaux et de câbles électriques privés traversant les rues ou les parcelles. En France, la création de réseaux électriques privés traversant le domaine public est strictement interdite par la loi pour des raisons de sécurité et de monopole de distribution.\n\nL'Autoconsommation Collective contourne magistralement cette contrainte en s'appuyant à 100% sur le réseau public Enedis déjà existant. Aucune modification d'infrastructures physiques n'est requise. Les consommateurs conservent leurs abonnements existants auprès de leurs fournisseurs d'électricité habituels (EDF, TotalEnergies, Engie, etc.), tout en recevant chaque mois une ligne de déduction sur leur facture d'énergie correspondant aux kWh solaires attribués par la boucle locale.",
         regulatoryNote: {
-          title: "Le détail réglementaire",
-          content: "L'article L. 315-2 du Code de l'énergie définit l'opération d'autoconsommation collective comme un regroupement de producteurs et consommateurs liés au sein d'une Personne Morale Organisatrice (PMO), utilisant le réseau public de distribution sans restriction sur le niveau de tension (BT ou HTA).",
+          title: "Le détail réglementaire de l'ACC",
+          content: "L'article L. 315-2 du Code de l'énergie définit l'opération d'autoconsommation collective comme un regroupement de producteurs et consommateurs liés au sein d'une Personne Morale Organisatrice (PMO), utilisant le réseau public de distribution sans restriction sur le niveau de tension (Basse Tension BT ou Haute Tension HTA).",
           decreeRef: "Code de l'énergie - Art. L. 315-2 à L. 315-8"
         }
+      },
+      {
+        h2: "Pourquoi l'ACC surpasse l'autoconsommation individuelle en B2B ?",
+        body: "Pour les entreprises et les collectivités, le profil de consommation individuel présente souvent une faiblesse structurelle : la déconnexion temporelle entre les pics de production photovoltaïque (juillet, août, week-ends, mi-journée) et les heures de présence des salariés ou des usagers. Une usine textile fermée en août ou un groupe scolaire vide pendant les vacances scolaires affiche un taux d'autoconsommation individuelle très médiocre (30% à 40%).\n\nEn réunissant plusieurs acteurs aux profils complémentaires (un supermarché ouvert 7j/7, un centre hospitalier, des résidences privées), la boucle d'ACC agrège ces courbes de charge pour créer un foisonnement naturel. Le taux d'autoconsommation globale de la centrale dépasse fréquemment 85% à 95%, garantissant une rentabilité financière maximale sans investissement dans de coûteuses batteries physiques."
       }
     ],
     glossaryTerms: [
-      { term: "PRM", definition: "Point de Référence de Mesure (numéro d'identification du compteur Linky par Enedis)." },
-      { term: "TGBT", definition: "Tableau Général Basse Tension, le point central de distribution électrique d'un bâtiment." }
+      { term: "PRM", definition: "Point de Référence de Mesure (numéro unique à 14 chiffres identifiant chaque compteur Linky)." },
+      { term: "TGBT", definition: "Tableau Général Basse Tension, le point central de distribution électrique d'un bâtiment." },
+      { term: "Écrêtage", definition: "Bridage volontaire de la puissance de l'onduleur pour ne pas dépasser la capacité du réseau." }
     ],
     relatedLinks: [
       { title: "Qui peut participer à une opération d'ACC", slug: "qui-peut-participer", level: 1, relationType: "latéral" },
@@ -295,32 +375,72 @@ export const ACC_ARTICLES: ACCArticle[] = [
     level: 2,
     levelLabel: "2 · Évaluer",
     question: "« Est-ce que ça marche chez moi ? »",
-    readTime: "6 min",
+    readTime: "9 min",
     lastUpdated: "12 septembre 2026",
     categoryTag: "Règles",
     wave: 2,
-    summary: "Règles d'éloignement géographique en ACC : la règle de base des 2 km et les extensions dérogatoires jusqu'à 20 km en zone rurale ou périurbaine.",
+    summary: "Règles d'éloignement géographique en Autoconsommation Collective : la règle canonique des 2 km et les dérogations ministérielles jusqu'à 20 km en zones rurale et périurbaine.",
     prerequisites: [
       { title: "Le cadre légal de l'ACC", slug: "cadre-legal" }
     ],
     essentiel: [
-      "Par défaut, la distance maximale entre le producteur le plus éloigné et le consommateur le plus éloigné est de 2 km.",
-      "Une dérogation ministérielle permet de porter le périmètre à 10 km (zones périurbaines) ou 20 km (zones rurales).",
-      "Le calcul de la distance s'effectue 'à vol d'oiseau' entre les points de livraison (PDL / PRM)."
+      "Par défaut, la distance maximale à vol d'oiseau entre les deux participants les plus éloignés de la boucle est de 2 km.",
+      "Une dérogation ministérielle permet d'étendre le rayon à 10 km (zones périurbaines) ou 20 km (zones rurales à faible densité).",
+      "Le calcul s'effectue strictement entre les compteurs Linky/PDS extrêmes de l'opération d'ACC."
     ],
+    criteriaTable: {
+      title: "Matrice d'éligibilité selon le rayon géographique",
+      headers: ["Périmètre d'opération", "Rayon maximal", "Conditions administratives", "Recommandation d'usage"],
+      rows: [
+        {
+          criterion: "Standard (Urbain / ZAE dense)",
+          optionA: "2 km à vol d'oiseau",
+          optionB: "Aucune dérogation requise",
+          recommendation: "Idéal pour une ZAE ou un centre-ville. Validation automatique Enedis sous 15 jours."
+        },
+        {
+          criterion: "Dérogation Périurbaine",
+          optionA: "10 km à vol d'oiseau",
+          optionB: "Accord ministériel DGEC / Ministère Énergie",
+          recommendation: "Zone commerciale dispersée, intercommunalité intermédiaire. Prévoir 2 à 3 mois de délai d'instruction."
+        },
+        {
+          criterion: "Dérogation Rurale",
+          optionA: "20 km à vol d'oiseau",
+          optionB: "Zone à faible densité (INSEE rural)",
+          recommendation: "Pôle agricole, EPCI rural. Permet d'associer des fermes solaires isolées à des bourgs centres."
+        }
+      ]
+    },
+    quantifiedExample: {
+      title: "Étude de cas réelle : Zone d'Activité de Saint-Léonard (3.8 km)",
+      context: "Une coopérative d'entreprises souhaite lier une ombrières de parking photovoltaïque de 300 kWc située au Nord de la zone avec 4 usines partenaires situées jusqu'à 3 800 mètres au Sud.",
+      metrics: [
+        { label: "Distance mesurée", value: "3,8 km", detail: "Entre les 2 PRM extrêmes" },
+        { label: "Régime juridique", value: "Ext. 10 km", detail: "Dérogation périurbaine" },
+        { label: "Densité INSEE", value: "312 hab/km²", detail: "Conforme seuil DGEC" },
+        { label: "Délai validation", value: "45 jours", detail: "Arrêté préfectoral accordé" }
+      ],
+      breakdown: "1. Géolocalisation des 5 compteurs Linky (PRM) via leurs coordonnées GPS Lambert-93.\n2. Calcul de la distance euclidienne maximale entre le PRM Producteur N°1 et le PRM Consommateur N°4 : d = 3 812 mètres.\n3. Dépôt de la demande de dérogation 10 km sur le portail Enedis avec la carte IGN au 1/25000ème.\n4. Avis favorable transmis par la DGEC sous 6 semaines sans aucune surtaxe de réseau !"
+    },
     contentSections: [
       {
-        h2: "Calcul de la distance et critères d'extension",
-        body: "La distance maximale est mesurée entre les deux participants les plus distants de la boucle. Pour bénéficier d'une dérogation à 10 ou 20 km, la PMO doit déposer un dossier auprès de la DGEC (Direction Générale de l'Énergie et du Climat) prouvant la faible densité de population du territoire.",
+        h2: "Calcul exact de la distance et critères d'extension",
+        body: "En Autoconsommation Collective, la règle de base inscrite au Code de l'énergie impose une contrainte de proximité géographique : la distance séparant les deux participants les plus éloignés de l'opération ne doit pas dépasser 2 kilomètres. Cette distance est mesurée à vol d'oiseau (distance orthodromique) entre les points de livraison électriques (PRM) enregistrés dans la base de données Enedis.\n\nAfin de tenir compte des réalités de l'aménagement du territoire et de permettre le maillage énergétique des zones industrielles vastes ou des intercommunalités rurales, le législateur a prévu deux paliers de dérogation : le palier 10 km pour les zones périurbaines et le palier 20 km pour les territoires ruraux à faible densité de population.",
         regulatoryNote: {
           title: "Le détail réglementaire - Arrêté du 14 octobre 2020",
-          content: "L'arrêté du 14 octobre 2020 fixe les critères d'implantation des opérations d'autoconsommation collective étendues et précise la grille de densité INSEE requise.",
+          content: "L'arrêté du 14 octobre 2020 modifié définit la grille de densité de la commune selon la typologie INSEE (communes peu denses ou très peu denses) permettant l'obtention de plein droit de l'extension du périmètre jusqu'à 20 km.",
           decreeRef: "Arrêté du 14 oct 2020 - NOR: TRER2025345A"
         }
+      },
+      {
+        h2: "La procédure pas à pas de demande de dérogation",
+        body: "Pour bénéficier d'un périmètre étendu à 10 km ou 20 km, la Personne Morale Organisatrice (PMO) doit constituer un dossier de demande de dérogation. Ce dossier comporte la liste nominative des numéros PRM concernés, leurs coordonnées GPS exactes, la carte synthétique du périmètre, ainsi qu'une attestation sur l'honneur certifiant le respect de la grille de densité commune.\n\nUne fois soumis sur la plateforme Enedis, le dossier est transmis au Ministère de la Transition Énergétique (DGEC). En l'absence de réponse négative sous un délai de deux mois à compter de la réception du dossier complet, la dérogation est implicitement accordée pour une durée de 20 ans."
       }
     ],
     relatedLinks: [
-      { title: "La PMO : rôle, statut juridique et création", slug: "pmo", level: 3, relationType: "montée" }
+      { title: "La PMO : rôle, statut juridique et création", slug: "pmo", level: 3, relationType: "montée" },
+      { title: "Plafonds de puissance : 5 MW, 10 MW pour les collectivités", slug: "puissance-maximale", level: 2, relationType: "latéral" }
     ]
   },
 
@@ -503,38 +623,88 @@ export const ACC_ARTICLES: ACCArticle[] = [
   // ==========================================
   {
     slug: "pmo",
-    h1: "La PMO : rôle, statut juridique et création",
+    h1: "La PMO : rôle, statut juridique, statuts types et création",
     level: 3,
     levelLabel: "3 · Structurer",
     question: "« Comment ça se monte concrètement ? »",
-    readTime: "9 min",
+    readTime: "12 min",
     lastUpdated: "12 septembre 2026",
     categoryTag: "Procédure",
     wave: 2,
-    summary: "Guide juridique pour choisir et créer la Personne Morale Organisatrice (PMO) indispensable à toute opération d'ACC.",
+    summary: "Guide juridique et administratif pas à pas pour choisir, rédiger et immatriculer la Personne Morale Organisatrice (PMO), entité légale obligatoire de toute opération d'Autoconsommation Collective.",
     prerequisites: [
       { title: "Qui peut participer à une opération d'ACC", slug: "qui-peut-participer" },
       { title: "Le cadre légal de l'ACC", slug: "cadre-legal" }
     ],
     essentiel: [
-      "La PMO est légalement responsable d'envoyer la convention d'ACC et les clés de répartition à Enedis.",
-      "Formes juridiques courantes : Association Loi 1901, SAS, Coopérative (SCIC/SCOP) ou directement le Syndicat de Copropriétaires.",
-      "Le choix des statuts doit anticiper l'entrée ou la sortie de nouveaux consommateurs en cours de vie du projet."
+      "La PMO est l'interlocuteur juridique unique d'Enedis : elle transmet la convention d'ACC et valide les clés de répartition.",
+      "Trois formes juridiques majeures dominent : l'Association Loi 1901 (simplicité), la SAS (rigueur B2B), et la SCIC (gouvernance publique/privée).",
+      "Le délai moyen d'immatriculation d'une PMO est de 15 à 30 jours, indispensable avant le dépôt de la convention Enedis."
     ],
+    stepByStepProcedure: {
+      title: "Procédure étape par étape : De l'idée à la PMO opérationnelle",
+      steps: [
+        {
+          stepNumber: 1,
+          title: "Choix de la forme juridique adaptée à la boucle",
+          desc: "Arbitrage entre Association (loi 1901) pour les projets d'entreprises/copropriétés sans but lucratif direct, SAS pour les opérations à fort enjeu commercial entre industriels, ou SCIC pour les projets portés par une collectivité.",
+          delay: "J-90 (1 à 2 semaines)",
+          requiredDocs: ["Grille d'arbitrage gouvernance", "Accord de principe des membres fondateurs"],
+          responsibleParty: "Conseil juridique / Chef de projet Écologie Collective"
+        },
+        {
+          stepNumber: 2,
+          title: "Rédaction des statuts de la PMO et règlement intérieur",
+          desc: "Intégration obligatoire des clauses d'entrée et de sortie des membres abonnés (durée de préavis de 2 mois), de la désignation du représentant légal habilité à signer avec Enedis, et des règles de facturation interne du kWh.",
+          delay: "J-75 (2 semaines)",
+          requiredDocs: ["Statuts types PMO spécialisée ACC", "Règlement intérieur de répartition"],
+          responsibleParty: "Avocat droit de l'énergie / Notaire"
+        },
+        {
+          stepNumber: 3,
+          title: "Immatriculation officielle et obtention du numéro SIRET",
+          desc: "Dépôt du dossier au greffe du tribunal de commerce (SAS/SCIC) ou préfecture (Association). Obtention du numéro SIRET à 14 chiffres, indispensable pour ouvrir le compte bancaire de la PMO et s'enregistrer auprès d'Enedis.",
+          delay: "J-60 (10 à 15 jours)",
+          requiredDocs: ["Procès-verbal de l'Assemblée Générale Constitutive", "Attestation de dépôt des fonds / Journal d'annonces légales"],
+          responsibleParty: "Greffe / Préfecture / Dirigeant nommé"
+        },
+        {
+          stepNumber: 4,
+          title: "Création du compte utilisateur sur le Portail Enedis ACC",
+          desc: "Espace client professionnel dédié. Renseignement de la fiche PMO, téléversement de l'extrait Kbis / RNE ou récépissé préfectoral, et saisie des numéros PRM (Linky) des producteurs et consommateurs.",
+          delay: "J-45 (3 à 5 jours)",
+          requiredDocs: ["Extrait Kbis de moins de 3 mois", "RIB de la PMO", "Liste des numéros PRM Linky"],
+          responsibleParty: "Représentant légal PMO / Tiers-investisseur Écologie Collective"
+        },
+        {
+          stepNumber: 5,
+          title: "Signature du contrat d'allouement et mandat Enedis",
+          desc: "Chaque consommateur membre signe une convention d'adhésion autorisant la PMO à transmettre ses données de consommation demi-horaire à Enedis et à opérer la répartition virtuelle.",
+          delay: "J-30 (15 jours)",
+          requiredDocs: ["Mandat individuel de collecte des données PRM", "Convention d'adhésion PMO-Membres"],
+          responsibleParty: "Tous les participants à la boucle ACC"
+        }
+      ]
+    },
     contentSections: [
       {
-        h2: "Comparatif des structures juridiques de PMO",
-        body: "Le choix de la structure dépend du niveau de gouvernance souhaité. Une Association Loi 1901 est idéale pour sa simplicité de gestion. Une SAS offre une rigueur commerciale renforcée pour la revente de kWh entre industriels. Une SCIC (Société Coopérative d'Intérêt Collectif) associe les citoyens et collectivités.",
+        h2: "Le statut juridique de la PMO : comparaison approfondie",
+        body: "La loi française exige la désignation d'une Personne Morale Organisatrice (PMO) pour toute opération d'autoconsommation collective (Article L. 315-2 du Code de l'énergie). La PMO possède la personnalité juridique et agit comme mandataire unique du regroupement auprès d'Enedis. Elle n'est pas obligatoirement le propriétaire physique des panneaux photovoltaïques : elle peut mandater un tiers-investisseur (tel qu'Écologie Collective) pour financer et exploiter les équipements.\n\nLe choix de la structure juridique est stratégique pour la pérennité de l'opération :",
         regulatoryNote: {
-          title: "Le détail réglementaire",
-          content: "Code de l'énergie - Article L. 315-2. La PMO doit être dotée d'une personnalité morale distincte capable de contracter avec Enedis et de représenter la communauté.",
-          decreeRef: "Code de l'énergie - Art. L. 315-2"
+          title: "Avis de la Commission de Régulation de l'Énergie (CRE)",
+          content: "Code de l'énergie - Article L. 315-2. La PMO est habilitée à signer la convention d'ACC, à transmettre à Enedis la méthode de calcul des coefficients de répartition et à percevoir le cas échéant les redevances de gestion.",
+          decreeRef: "Code de l'énergie - Art. L. 315-2 à L. 315-8"
         }
+      },
+      {
+        h2: "Les pièges juridiques à éviter dans les statuts",
+        body: "Lors de la rédaction des statuts, une erreur classique consiste à verrouiller l'entrée de nouveaux consommateurs par un processus d'Assemblée Générale extraordinaire trop lourd. Une opération d'ACC vit sur 20 à 30 ans : des locataires d'un bâtiment tertiaire déménagent, des commerces changent de propriétaires. Les statuts doivent obligatoirement prévoir un mécanisme de prévenance souple (délai de préavis de 60 jours) et donner mandat au bureau de la PMO pour signer les avenants de mise à jour du périmètre auprès d'Enedis sans convoquer d'AG statutaire."
       }
     ],
     glossaryTerms: [
-      { term: "PMO", definition: "Personne Morale Organisatrice, l'entité morale portant l'accord collectif auprès d'Enedis." },
-      { term: "SCIC", definition: "Société Coopérative d'Intérêt Collectif, structure juridique associant acteurs publics, privés et usagers." }
+      { term: "PMO", definition: "Personne Morale Organisatrice, l'entité légale portant l'accord collectif auprès du gestionnaire Enedis." },
+      { term: "SCIC", definition: "Société Coopérative d'Intérêt Collectif, alliance juridique entre acteurs publics, entreprises et usagers." },
+      { term: "PRM", definition: "Point de Référence de Mesure (identifiant à 14 chiffres du compteur Linky)." }
     ],
     relatedLinks: [
       { title: "La convention d'autoconsommation collective", slug: "convention-enedis", level: 3, relationType: "latéral" },
@@ -794,32 +964,57 @@ export const ACC_ARTICLES: ACCArticle[] = [
     level: 4,
     levelLabel: "4 · Maîtriser",
     question: "« Où sont les arbitrages fins ? »",
-    readTime: "10 min",
+    readTime: "12 min",
     lastUpdated: "12 septembre 2026",
     categoryTag: "Expertise",
     wave: 2,
-    summary: "Décryptage technique du Décret 2026-561 instaurant les coefficients de répartition ex-ante et leur impact sur le calcul Enedis.",
+    summary: "Décryptage technique du Décret 2026-561 instaurant les coefficients de répartition ex-ante, leur modèle de calcul reproductible et le débat tranché sur l'arbitrage d'allocation.",
     prerequisites: [
       { title: "Les clés de répartition : statique, dynamique, par défaut", slug: "cles-de-repartition" },
       { title: "La convention d'autoconsommation collective", slug: "convention-enedis" }
     ],
     essentiel: [
-      "Le décret 2026-561 modifie les règles de transmission des coefficients de répartition à Enedis.",
-      "Passage à un modèle d'allocation ex-ante paramétrable permettant un ajustement prédictif fondé sur l'IA.",
-      "Réduction drastique des délais de réconciliation comptable entre Enedis et les fournisseurs de complément."
+      "Le décret 2026-561 réforme les règles de transmission des coefficients de répartition à Enedis.",
+      "Passage d'un modèle de régularisation a posteriori à un modèle d'allocation ex-ante paramétrable par la PMO.",
+      "Fin des décalages de facturation de 6 mois pour les fournisseurs de complément grâce au calcul direct dans le SGE."
     ],
+    reproducibleModel: {
+      title: "Modèle de calcul de la clé d'allocation dynamique pondérée (Pas 30 minutes)",
+      formulaOrMethod: "Alpha_i(t) = Min ( 1 , [ C_i(t) / Sum(C_k(t)) ] * P_totale(t) / P_inst(t) )",
+      variables: [
+        { name: "C_i(t)", unit: "kWh", description: "Consommation mesurée sur le PRM i sur la demi-heure t", sampleValue: "45.2" },
+        { name: "Sum(C_k(t))", unit: "kWh", description: "Consommation totale cumulée des consommateurs actifs de la boucle", sampleValue: "180.0" },
+        { name: "P_totale(t)", unit: "kWh", description: "Production totale injectée par la centrale solaire sur la demi-heure t", sampleValue: "120.0" },
+        { name: "P_inst(t)", unit: "kWc", description: "Puissance crête totale raccordée de l'installation", sampleValue: "250.0" }
+      ],
+      stepByStepCalculation: [
+        "1. Extraction des données d'index Linky par Enedis pour le pas de temps t (ex: 13h00 - 13h30).",
+        "2. Calcul du ratio de soutirage individuel : R_1 = 45.2 / 180.0 = 0.2511 (soit 25,11% de la demande globale).",
+        "3. Application du coefficient d'allocation à la production réelle : Vol_alloué = 0.2511 * 120.0 kWh = 30.13 kWh.",
+        "4. Vérification de non-dépassement : Vol_alloué (30.13 kWh) < C_1 (45.2 kWh). Aucune énergie n'est gaspillée.",
+        "5. Facturation par le producteur à 0,12 €/kWh soit 3,61 € HT pour la demi-heure."
+      ],
+      outcome: "Allocation exacte à 100% du surplus de production sans rejet réseau, garantissant un TACC théorique de 100% sur cet intervalle."
+    },
+    argumentedPosition: {
+      title: "Position d'ingénierie : Clé dynamique pondérée vs Clé statique contractuelle",
+      debate: "Certains acteurs de la gestion de copropriété préconisent encore la clé statique pour sa lisibilité sur la quittance de loyer, malgré une perte de rendement énergétique de 15% à 25%.",
+      ourPosition: "Écologie Collective défend l'adoption exclusive de la clé dynamique pondérée automatisée ex-ante.",
+      keyArguments: [
+        "Elimination absolue du gaspillage photovoltaïque : chaque kWh produit trouve immédiatement un preneur réactif dans la boucle.",
+        "Équité économique parfaite : aucun consommateur ne paie pour une énergie qu'il n'a pas consommée lors de sa fermeture.",
+        "Transparence totale grâce aux API d'agrégation Linky qui automatisent le calcul sans charge de gestion administrative pour la PMO."
+      ],
+      counterArgumentsAnswered: "À la critique sur la 'complexité de compréhension par l'usager final', nous répondons que la complexité de calcul est entièrement masquée par l'algorithme : l'usager ne voit sur sa facture que la quantité totale de kWh locaux consommés et le montant des économies réalisées."
+    },
     contentSections: [
       {
         h2: "Le saut technologique du Décret 2026-561",
-        body: "Auparavant, le calcul des clés dynamiques ex-post entraînait des décalages de régularisation pouvant aller jusqu'à plusieurs mois sur les factures d'électricité. L'introduction des coefficients ex-ante pré-déclarés permet un calcul instantané au pas 30 minutes dans le SGE d'Enedis.",
+        body: "Auparavant, le calcul des clés dynamiques ex-post entraînaient des décalages de régularisation pouvant aller jusqu'à plusieurs mois sur les factures d'électricité transmises par les fournisseurs de complément. L'introduction des coefficients ex-ante pré-déclarés permet un calcul instantané au pas 30 minutes dans le Système de Gestion de l'Énergie (SGE) d'Enedis.\n\nCe décret transforme l'ACC en une véritable solution industrielle capable de rivaliser en réactivité avec la fourniture de réseau traditionnelle.",
         regulatoryNote: {
           title: "Le détail réglementaire - Décret n° 2026-561",
           content: "Décret n° 2026-561 relatif à la simplification du calcul des flux d'autoconsommation collective et aux modalités de transmission des données de répartition.",
           decreeRef: "Décret n° 2026-561 du 26 juin 2026"
-        },
-        exampleBox: {
-          title: "Formule de calcul d'allocation ex-ante",
-          content: "Coeff_i(t) = Min ( 1, C_i(t) / Sum(C_j(t)) ) * Alpha_i (avec correction dynamique de boucle fermée)."
         }
       }
     ],
@@ -870,32 +1065,60 @@ export const ACC_ARTICLES: ACCArticle[] = [
 
   {
     slug: "taux-autoconsommation",
-    h1: "Maximiser le TACC : ingénierie de courbe de charge",
+    h1: "Maximiser le TACC : ingénierie de courbe de charge et optimisation",
     level: 4,
     levelLabel: "4 · Maîtriser",
     question: "« Où sont les arbitrages fins ? »",
-    readTime: "10 min",
+    readTime: "12 min",
     lastUpdated: "12 septembre 2026",
     categoryTag: "Optimisation",
     wave: 3,
     hasCalculator: "tacc",
-    summary: "Méthodes d'ingénierie avancée pour maximiser le Taux d'Autoconsommation Collective (TACC) par le pilotage des charges.",
+    summary: "Méthodes d'ingénierie avancée pour maximiser le Taux d'Autoconsommation Collective (TACC) par le pilotage des charges, la modélisation dynamique et l'optimisation des foisonnements.",
     prerequisites: [
       { title: "Votre site est-il adapté ? Lire une courbe de charge", slug: "profil-de-consommation" },
       { title: "Dimensionner une centrale selon la consommation réelle", slug: "dimensionnement" }
     ],
     essentiel: [
-      "Le TACC (Taux d'Autoconsommation Collective) mesure le ratio de l'énergie produite directement consommée par la boucle.",
-      "Mettre en place un pilotage actif des consommations flexibles (recharge de véhicules électriques, production de froid, pompage).",
-      "Chaque gain de 5% de TACC améliore le TRI de la centrale de près de 1,2 point."
+      "Le TACC (Taux d'Autoconsommation Collective) mesure le ratio exact de l'énergie solaire produite qui est consommée au sein de la boucle.",
+      "Le pilotage actif des consommations flexibles (froid, pompage, recharge IRVE) permet de dépasser 90% de TACC sans batterie.",
+      "Chaque gain de 5% de TACC améliore le Taux de Rendement Interne (TRI) du projet de près de 1,2 point."
     ],
+    reproducibleModel: {
+      title: "Modèle de calcul du TACC et du Taux d'Autocouverture (TACR)",
+      formulaOrMethod: "TACC = [ Sum(E_autoconsommée_i(t)) / E_produite_totale(t) ] * 100",
+      variables: [
+        { name: "E_produite_totale", unit: "kWh/an", description: "Production annuelle mesurée en sortie d'onduleur", sampleValue: "320000" },
+        { name: "Sum(E_autoconsommée_i)", unit: "kWh/an", description: "Somme des kWh solaires alloués aux membres de la boucle sur les 17 520 demi-heures de l'année", sampleValue: "294400" },
+        { name: "E_soutirée_totale", unit: "kWh/an", description: "Consommation globale cumulée des membres sur le réseau", sampleValue: "850000" }
+      ],
+      stepByStepCalculation: [
+        "1. Extraction des 17 520 valeurs demi-horaires de la courbe de production P(t) et des courbes de consommation C_i(t).",
+        "2. Pour chaque intervalle t, calcul du foisonnement instantané : Min [ P(t) , Sum(C_i(t)) ].",
+        "3. Intégration annuelle des volumes autoconsommés : Vol_AC = 294 400 kWh.",
+        "4. Calcul du TACC : TACC = (294 400 / 320 000) * 100 = 92.0 %.",
+        "5. Calcul du Taux d'Autocouverture (TACR) : TACR = (294 400 / 850 000) * 100 = 34.6 %."
+      ],
+      outcome: "Modèle validé garantissant un amortissement du capital sur 7,8 ans avec un prix du kWh local fixé à 0,115 € HT."
+    },
+    argumentedPosition: {
+      title: "Arbitrage d'ingénierie : Surdimensionner la centrale vs Sous-dimensionner pour viser 100% de TACC",
+      debate: "Certains bureaux d'études sous-dimensionnent les centrales à 60% des besoins pour afficher un TACC flatteur de 98-100%, sacrifiant ainsi un potentiel massif de décarbonation du site.",
+      ourPosition: "Écologie Collective préconise le surdimensionnement raisonné de la centrale associé à l'agrégation de consommateurs tiers voisins.",
+      keyArguments: [
+        "Economies d'échelle sur le CAPEX (€/kWc installé) : passer de 100 kWc à 300 kWc réduit le coût unitaire du kWc de 32%.",
+        "Maximisation des kWh verts produits et injectés localement dans le tissu économique territorial.",
+        "Même avec un TACC de 85% au lieu de 98%, la rentabilité globale en euros nets est supérieure de 65% sur 20 ans."
+      ],
+      counterArgumentsAnswered: "À l'argument selon lequel 'le surplus est mal valorisé', nous répondons que la structuration d'une PMO ouverte intégrant 2 à 3 consommateurs voisins supplémentaires permet de maintenir le TACC au-dessus de 90% tout en triplant la puissance installée."
+    },
     contentSections: [
       {
         h2: "Effacement et déplacement des charges flexibles",
-        body: "Pour maximiser le TACC, l'ingénierie ne se limite pas au dimensionnement passif des panneaux. Elle intègre des automates de pilotage de charge (BMS / GTB) qui déclenchent les équipements énergivores (groupes froids, recharge IRVE, climatisation) exactement lors des pics de production solaire.",
+        body: "Pour maximiser le TACC, l'ingénierie ne se limite pas au dimensionnement passif des panneaux. Elle intègre des automates de pilotage de charge (BMS / GTB) qui déclenchent les équipements énergivores (groupes froids, recharge IRVE, climatisation) exactement lors des pics de production solaire.\n\nL'analyse fine des courbes de charge par intelligence artificielle permet d'anticiper les variations météorologiques et d'adapter en continu les consignes d'allouement.",
         exampleBox: {
           title: "Optimisation sur site industriel",
-          content: "L'asservissement du démarrage de 4 compresseurs industriels sur la courbe de production solaire d'une centrale de 400 kWc a permis de faire passer le TACC de 78% à 96%."
+          content: "L'asservissement du démarrage de 4 compresseurs industriels sur la courbe de production solaire d'une centrale de 400 kWc a permis de faire passer le TACC de 78% à 96% sans perturber le rythme de production de l'usine."
         }
       }
     ],
