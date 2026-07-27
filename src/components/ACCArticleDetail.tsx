@@ -4,9 +4,15 @@ import { ACC_ARTICLES, ACC_LEVELS, ACCArticle } from '../data/accArticles';
 import { 
   ArrowLeft, ArrowRight, Calendar, Layers, ChevronDown, ChevronUp, 
   HelpCircle, BookOpen, AlertCircle, FileText, CheckCircle2, Share2, Sparkles, Network,
-  Zap, Table, Clock, FileCheck, Calculator, Scale, ArrowDown, Activity, Check, ShieldCheck
+  Zap, Table, Clock, FileCheck, Calculator, Scale, ArrowDown, Activity, Check, ShieldCheck,
+  Home, ChevronRight
 } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
+import { 
+  generateArticleBreadcrumbSchema, 
+  generateArticleSchema, 
+  generateArticleFAQSchema 
+} from '../utils/schemaOrg';
 
 export default function ACCArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -22,7 +28,7 @@ export default function ACCArticleDetail() {
         <h2 className="text-3xl font-bold text-slate-900 mb-4">Article non trouvé</h2>
         <p className="text-slate-600 mb-6">L'article recherché n'existe pas dans le hub de connaissances ACC.</p>
         <Link 
-          to="/comprendre-acc" 
+          to="/autoconsommation-collective" 
           className="bg-slate-900 text-white font-bold px-6 py-3 rounded-full flex items-center gap-2 hover:bg-slate-800 transition-all"
         >
           <ArrowLeft className="w-4 h-4" /> Retourner au Hub ACC
@@ -33,21 +39,93 @@ export default function ACCArticleDetail() {
 
   const currentLevelInfo = ACC_LEVELS.find(l => l.level === article.level);
 
+  // JSON-LD Schema Objects
+  const breadcrumbSchema = generateArticleBreadcrumbSchema(article);
+  const articleSchema = generateArticleSchema(article);
+  const faqSchema = generateArticleFAQSchema(article);
+
   return (
     <div className="bg-[#F5F5F7] min-h-screen pb-20">
+      {/* JSON-LD Structured Data Markup (Schema.org) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Top Banner & Header */}
       <div className="bg-slate-900 text-white pt-24 pb-12 px-4 md:px-8 border-b border-slate-800">
         <div className="max-w-5xl mx-auto">
           {/* Breadcrumb Navigation */}
-          <div className="flex flex-wrap items-center gap-2 text-xs text-blue-200/80 mb-6 font-medium">
-            <Link to="/comprendre-acc" className="hover:text-[#CCFF00] transition-colors flex items-center gap-1">
-              <Network className="w-3.5 h-3.5" /> Hub ACC
-            </Link>
-            <span>/</span>
-            <span className="text-slate-400">{article.levelLabel}</span>
-            <span>/</span>
-            <span className="text-[#CCFF00] font-semibold truncate max-w-xs">{article.h1}</span>
-          </div>
+          <nav aria-label="Fil d'Ariane" className="mb-6">
+            <ol className="inline-flex flex-wrap items-center gap-1 bg-slate-800/90 border border-slate-700/80 rounded-full px-3.5 py-1.5 text-xs font-medium text-slate-300 backdrop-blur-md shadow-lg shadow-black/20">
+              {/* Step 1: Accueil */}
+              <li>
+                <Link 
+                  to="/" 
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-slate-300 hover:text-white hover:bg-slate-700/90 transition-all cursor-pointer hover:underline underline-offset-4 group"
+                  title="Retourner à la page d'accueil"
+                >
+                  <Home className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#CCFF00] transition-colors" />
+                  <span>Accueil</span>
+                </Link>
+              </li>
+
+              <li aria-hidden="true" className="text-slate-500">
+                <ChevronRight className="w-3.5 h-3.5" />
+              </li>
+
+              {/* Step 2: Hub ACC */}
+              <li>
+                <Link 
+                  to="/autoconsommation-collective" 
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-slate-300 hover:text-white hover:bg-slate-700/90 transition-all cursor-pointer hover:underline underline-offset-4 group"
+                  title="Retourner au Hub de connaissances ACC"
+                >
+                  <Network className="w-3.5 h-3.5 text-[#CCFF00] group-hover:scale-110 transition-transform" />
+                  <span>Hub ACC</span>
+                </Link>
+              </li>
+
+              <li aria-hidden="true" className="text-slate-500">
+                <ChevronRight className="w-3.5 h-3.5" />
+              </li>
+
+              {/* Step 3: Level */}
+              <li>
+                <Link 
+                  to={`/autoconsommation-collective?level=${article.level}`} 
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-slate-300 hover:text-white hover:bg-slate-700/90 transition-all cursor-pointer hover:underline underline-offset-4 group"
+                  title={`Voir tous les articles du ${article.levelLabel}`}
+                >
+                  <Layers className="w-3.5 h-3.5 text-blue-400 group-hover:scale-110 transition-transform" />
+                  <span>{article.levelLabel}</span>
+                </Link>
+              </li>
+
+              <li aria-hidden="true" className="text-slate-500">
+                <ChevronRight className="w-3.5 h-3.5" />
+              </li>
+
+              {/* Step 4: Current Article */}
+              <li>
+                <span 
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[#CCFF00] font-semibold truncate max-w-[180px] sm:max-w-xs md:max-w-md bg-[#CCFF00]/10 border border-[#CCFF00]/30 shadow-sm"
+                  aria-current="page"
+                  title={article.h1}
+                >
+                  <span className="truncate">{article.h1}</span>
+                </span>
+              </li>
+            </ol>
+          </nav>
 
           {/* DISPOSITIF 1 : BANDEAU DE SITUATION EN HAUT */}
           <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 mb-8 text-xs md:text-sm flex flex-col md:flex-row md:items-center justify-between gap-4 backdrop-blur-md">
@@ -62,7 +140,7 @@ export default function ACCArticleDetail() {
                   {article.prerequisites.map((req, idx) => (
                     <Link 
                       key={idx} 
-                      to={`/comprendre-acc/${req.slug}`}
+                      to={`/autoconsommation-collective/${req.slug}`}
                       className="text-[#CCFF00] hover:underline font-medium flex items-center gap-1"
                     >
                       {req.title} <ArrowRight className="w-3 h-3" />
@@ -76,9 +154,9 @@ export default function ACCArticleDetail() {
               )}
             </div>
 
-            <div className="flex items-center gap-3 text-slate-400 shrink-0 text-xs font-mono">
-              <Calendar className="w-3.5 h-3.5 text-slate-400" />
-              <span>Mis à jour le {article.lastUpdated}</span>
+            <div className="flex items-center gap-2 text-slate-200 text-xs font-mono font-medium bg-slate-900/80 border border-slate-700/80 px-3 py-1.5 rounded-full shadow-sm shrink-0">
+              <Calendar className="w-3.5 h-3.5 text-[#CCFF00]" />
+              <span>Dernière mise à jour : <strong className="text-white font-semibold">{article.lastUpdated}</strong></span>
             </div>
           </div>
 
@@ -446,7 +524,7 @@ export default function ACCArticleDetail() {
                   {section.linkToMore && (
                     <div className="pt-2 border-t border-slate-100">
                       <Link 
-                        to={`/comprendre-acc/${section.linkToMore.slug}`}
+                        to={`/autoconsommation-collective/${section.linkToMore.slug}`}
                         className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors group"
                       >
                         <span>Pour aller plus loin : {section.linkToMore.label}</span>
@@ -486,7 +564,7 @@ export default function ACCArticleDetail() {
                 {article.relatedLinks.map((link, idx) => (
                   <Link 
                     key={idx}
-                    to={`/comprendre-acc/${link.slug}`}
+                    to={`/autoconsommation-collective/${link.slug}`}
                     className="p-4 rounded-2xl border border-slate-200 hover:border-[#CCFF00] hover:bg-slate-50 transition-all group flex flex-col justify-between space-y-2"
                   >
                     <div className="flex items-center justify-between">
@@ -577,7 +655,7 @@ export default function ACCArticleDetail() {
                   ))}
                 </div>
                 <Link 
-                  to="/comprendre-acc" 
+                  to="/autoconsommation-collective" 
                   className="block text-center text-[#CCFF00] hover:underline font-bold text-xs pt-2"
                 >
                   Voir tous les 28 articles du Hub →

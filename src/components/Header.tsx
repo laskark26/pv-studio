@@ -46,7 +46,7 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav className={`hidden lg:flex items-center gap-8 text-sm font-medium ${navColor} transition-colors duration-300`}>
           <Link to="/a-propos" className={`${linkHoverColor} transition-colors`}>À propos</Link>
-          <Link to="/comprendre-acc" className={`${linkHoverColor} transition-colors`}>Comprendre l'ACC</Link>
+          <Link to="/autoconsommation-collective" className={`${linkHoverColor} transition-colors`}>Comprendre l'ACC</Link>
           <Link to="/secteurs" className={`${linkHoverColor} transition-colors`}>Secteurs</Link>
           <Link to="/nos-projets" className={`${linkHoverColor} transition-colors`}>Nos projets</Link>
           <Link to="/contact" className={`${linkHoverColor} transition-colors`}>Contactez nous</Link>
@@ -78,7 +78,7 @@ export default function Header() {
         <div className="lg:hidden mt-4 mx-4 bg-blue-950/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl text-white space-y-4">
           <nav className="flex flex-col space-y-3 font-medium text-base">
             <Link to="/a-propos" className="hover:text-[#CCFF00] transition-colors py-1">À propos</Link>
-            <Link to="/comprendre-acc" className="hover:text-[#CCFF00] transition-colors py-1">Comprendre l'ACC</Link>
+            <Link to="/autoconsommation-collective" className="hover:text-[#CCFF00] transition-colors py-1">Comprendre l'ACC</Link>
             <Link to="/secteurs" className="hover:text-[#CCFF00] transition-colors py-1">Secteurs</Link>
             <Link to="/nos-projets" className="hover:text-[#CCFF00] transition-colors py-1">Nos projets</Link>
             <Link to="/contact" className="hover:text-[#CCFF00] transition-colors py-1">Contactez nous</Link>

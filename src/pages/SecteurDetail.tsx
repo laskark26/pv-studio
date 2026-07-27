@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Home, ChevronRight, Building2 } from 'lucide-react';
 import { secteurs } from '../data/secteurs';
 import { useModal } from '../context/ModalContext';
 
@@ -33,9 +33,50 @@ export default function SecteurDetail() {
     <div className="pt-24 pb-20">
       {/* Hero section */}
       <div className="max-w-7xl mx-auto px-6 mb-12">
-        <Link to="/secteurs" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 font-medium mb-8 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Retour aux secteurs
-        </Link>
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Fil d'Ariane" className="mb-8">
+          <ol className="inline-flex flex-wrap items-center gap-1 bg-slate-100 border border-slate-200/80 rounded-full px-3.5 py-1.5 text-xs font-medium text-slate-600 shadow-sm">
+            <li>
+              <Link 
+                to="/" 
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-slate-600 hover:text-blue-900 hover:bg-white transition-all cursor-pointer hover:underline underline-offset-4 group"
+                title="Retourner à l'accueil"
+              >
+                <Home className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                <span>Accueil</span>
+              </Link>
+            </li>
+
+            <li aria-hidden="true" className="text-slate-400">
+              <ChevronRight className="w-3.5 h-3.5" />
+            </li>
+
+            <li>
+              <Link 
+                to="/secteurs" 
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-slate-600 hover:text-blue-900 hover:bg-white transition-all cursor-pointer hover:underline underline-offset-4 group"
+                title="Voir tous nos secteurs d'activité"
+              >
+                <Building2 className="w-3.5 h-3.5 text-blue-600 group-hover:scale-110 transition-transform" />
+                <span>Secteurs</span>
+              </Link>
+            </li>
+
+            <li aria-hidden="true" className="text-slate-400">
+              <ChevronRight className="w-3.5 h-3.5" />
+            </li>
+
+            <li>
+              <span 
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-blue-900 font-bold bg-blue-50 border border-blue-200/60 truncate max-w-xs"
+                aria-current="page"
+                title={secteur.title}
+              >
+                <span className="truncate">{secteur.title}</span>
+              </span>
+            </li>
+          </ol>
+        </nav>
         
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Main info */}

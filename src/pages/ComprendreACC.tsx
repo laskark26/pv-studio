@@ -1,14 +1,27 @@
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { Network, Zap, Users, ShieldCheck, FileText, ArrowRight, Search, Filter, BookOpen, Layers, Sparkles, CheckCircle2, Sun } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Network, Zap, Users, ShieldCheck, FileText, ArrowRight, Search, Filter, BookOpen, Layers, Sparkles, CheckCircle2, Sun, Calendar, Clock } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
 import { ACC_ARTICLES, ACC_LEVELS, ACCArticle } from '../data/accArticles';
+import { generateHubBreadcrumbSchema, generateHubFAQSchema } from '../utils/schemaOrg';
 
 export default function ComprendreACC() {
   const { openModal } = useModal();
+  const [searchParams] = useSearchParams();
   const [selectedLevel, setSelectedLevel] = useState<number | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedWave, setSelectedWave] = useState<number | 'all'>('all');
+
+  // Read level from search param if present
+  useEffect(() => {
+    const levelParam = searchParams.get('level');
+    if (levelParam) {
+      const parsed = parseInt(levelParam, 10);
+      if ([1, 2, 3, 4].includes(parsed)) {
+        setSelectedLevel(parsed);
+      }
+    }
+  }, [searchParams]);
 
   // Filtered Articles based on search & tab level
   const filteredArticles = useMemo(() => {
@@ -25,8 +38,25 @@ export default function ComprendreACC() {
     });
   }, [selectedLevel, selectedWave, searchQuery]);
 
+  // JSON-LD Schemas
+  const breadcrumbSchema = generateHubBreadcrumbSchema(selectedLevel);
+  const faqSchema = generateHubFAQSchema();
+
+  // Find latest update date across articles
+  const latestUpdateDate = ACC_ARTICLES[0]?.lastUpdated || "12 septembre 2026";
+
   return (
     <>
+      {/* JSON-LD Structured Data Markup (Schema.org) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Hero Header with Dark Blue Palette */}
       <div className="p-3 md:p-5">
         <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-blue-900 flex flex-col min-h-[55vh] md:min-h-[65vh]">
@@ -48,8 +78,14 @@ export default function ComprendreACC() {
           {/* Hero Section */}
           <section className="relative z-20 flex-1 flex items-center pt-28 pb-20 px-6 md:px-12 max-w-7xl mx-auto w-full">
             <div className="max-w-4xl">
-              <div className="inline-flex items-center gap-2 border border-[#CCFF00]/40 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider mb-6 text-[#CCFF00] backdrop-blur-md bg-blue-950/60">
-                <Network className="w-4 h-4" /> Hub de Connaissances · v2 Parcours Progressif
+              <div className="flex flex-wrap items-center gap-3 mb-6">
+                <div className="inline-flex items-center gap-2 border border-[#CCFF00]/40 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#CCFF00] backdrop-blur-md bg-blue-950/60">
+                  <Network className="w-4 h-4" /> Hub de Connaissances · v2 Parcours Progressif
+                </div>
+                <div className="inline-flex items-center gap-1.5 border border-slate-700/80 rounded-full px-3.5 py-1.5 text-xs font-mono font-medium text-slate-300 backdrop-blur-md bg-slate-900/80">
+                  <Clock className="w-3.5 h-3.5 text-[#CCFF00]" />
+                  <span>Base à jour au <strong className="text-white">{latestUpdateDate}</strong></span>
+                </div>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
                 Comprendre l'Autoconsommation Collective <span className="text-[#CCFF00]">sans filtre.</span>
@@ -282,7 +318,7 @@ export default function ComprendreACC() {
             {filteredArticles.map((article) => (
               <Link 
                 key={article.slug}
-                to={`/comprendre-acc/${article.slug}`}
+                to={`/autoconsommation-collective/${article.slug}`}
                 className="bg-slate-800/80 hover:bg-slate-800 p-6 rounded-3xl border border-slate-700/80 hover:border-[#CCFF00] transition-all group flex flex-col justify-between shadow-lg relative overflow-hidden"
               >
                 <div>
@@ -321,9 +357,17 @@ export default function ComprendreACC() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-slate-700/80 text-xs font-bold text-[#CCFF00]">
-                  <span>Consulter la fiche</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+                <div className="pt-4 border-t border-slate-700/80 space-y-2">
+                  <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <span className="flex items-center gap-1.5 text-slate-300">
+                      <Calendar className="w-3.5 h-3.5 text-[#CCFF00]" /> {article.lastUpdated}
+                    </span>
+                    <span>{article.readTime}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs font-bold text-[#CCFF00] pt-1">
+                    <span>Consulter la fiche</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+                  </div>
                 </div>
               </Link>
             ))}

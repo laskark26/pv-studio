@@ -34,10 +34,10 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/a-propos" element={<About />} />
-            <Route path="/comprendre-acc" element={<ComprendreACC />} />
-            <Route path="/comprendre-acc/:slug" element={<ACCArticleDetail />} />
             <Route path="/autoconsommation-collective" element={<ComprendreACC />} />
             <Route path="/autoconsommation-collective/:slug" element={<ACCArticleDetail />} />
+            <Route path="/comprendre-acc" element={<ComprendreACC />} />
+            <Route path="/comprendre-acc/:slug" element={<ACCArticleDetail />} />
             <Route path="/nos-projets" element={<Projects />} />
             <Route path="/nos-projets/:id" element={<ProjectDetail />} />
             <Route path="/secteurs" element={<Secteurs />} />

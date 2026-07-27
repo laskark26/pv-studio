@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, Zap, Building2, Handshake, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, MapPin, Zap, Building2, Handshake, ArrowRight, ShieldCheck, Home, ChevronRight } from 'lucide-react';
 import { projects } from '../data/projects';
 import { useModal } from '../context/ModalContext';
 
@@ -34,9 +34,50 @@ export default function ProjectDetail() {
     <div className="pt-24 pb-20">
       {/* Hero section */}
       <div className="max-w-7xl mx-auto px-6 mb-12">
-        <Link to="/nos-projets" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 font-medium mb-8 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Retour aux projets
-        </Link>
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Fil d'Ariane" className="mb-8">
+          <ol className="inline-flex flex-wrap items-center gap-1 bg-slate-100 border border-slate-200/80 rounded-full px-3.5 py-1.5 text-xs font-medium text-slate-600 shadow-sm">
+            <li>
+              <Link 
+                to="/" 
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-slate-600 hover:text-blue-900 hover:bg-white transition-all cursor-pointer hover:underline underline-offset-4 group"
+                title="Retourner à l'accueil"
+              >
+                <Home className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                <span>Accueil</span>
+              </Link>
+            </li>
+
+            <li aria-hidden="true" className="text-slate-400">
+              <ChevronRight className="w-3.5 h-3.5" />
+            </li>
+
+            <li>
+              <Link 
+                to="/nos-projets" 
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-slate-600 hover:text-blue-900 hover:bg-white transition-all cursor-pointer hover:underline underline-offset-4 group"
+                title="Voir tous nos projets"
+              >
+                <Zap className="w-3.5 h-3.5 text-[#99cc00] group-hover:scale-110 transition-transform" />
+                <span>Nos projets</span>
+              </Link>
+            </li>
+
+            <li aria-hidden="true" className="text-slate-400">
+              <ChevronRight className="w-3.5 h-3.5" />
+            </li>
+
+            <li>
+              <span 
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-blue-900 font-bold bg-blue-50 border border-blue-200/60 truncate max-w-xs"
+                aria-current="page"
+                title={project.name}
+              >
+                <span className="truncate">{project.name}</span>
+              </span>
+            </li>
+          </ol>
+        </nav>
         
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Main info */}
