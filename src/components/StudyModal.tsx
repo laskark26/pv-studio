@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, ArrowRight, ArrowLeft, Building, UserCheck, Key, CheckCircle2, MapPin } from 'lucide-react';
+import { X, ArrowRight, ArrowLeft, Building, UserCheck, Key, CheckCircle2, MapPin, Stethoscope, Landmark, Factory, Sprout, Users } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
 
 export default function StudyModal() {
@@ -63,7 +63,7 @@ export default function StudyModal() {
             </h3>
             {!isSubmitted && (
               <p className="text-slate-500 mt-1 text-sm md:text-base">
-                Évaluez le potentiel solaire de votre site en 3 étapes.
+                Découvrez nos modèles tiers-investissement (0€ CAPEX) ou clé en main. Évaluez le potentiel solaire de votre site.
               </p>
             )}
           </div>
@@ -133,12 +133,15 @@ export default function StudyModal() {
 
               {/* Step 2 */}
               <div className={`space-y-4 transition-all duration-500 ${step === 2 ? 'block' : 'hidden'}`}>
-                <label className="block text-sm font-bold text-slate-700 mb-2">Quel est votre profil ?</label>
-                <div className="grid grid-cols-1 gap-3">
+                <label className="block text-sm font-bold text-slate-700 mb-2">Quel est votre secteur d'activité ?</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
-                    { id: 'entreprise', label: 'Entreprise / Tertiaire', icon: Building, desc: 'Dirigeant, Directeur RSE, Facility Manager.' },
-                    { id: 'copro', label: 'Copropriété / Résidentiel', icon: UserCheck, desc: 'Syndic, Membre du CS, Copropriétaire.' },
-                    { id: 'public', label: 'Secteur Public', icon: Key, desc: 'Élu, Directeur technique, Collectivité.' }
+                    { id: 'sante', label: 'Santé & Médico-social', icon: Stethoscope, desc: 'Hôpital, EHPAD...' },
+                    { id: 'industrie', label: 'Industrie & Logistique', icon: Factory, desc: 'Usine, entrepôt...' },
+                    { id: 'collectivite', label: 'Collectivité', icon: Landmark, desc: 'Bâtiment public, école...' },
+                    { id: 'tertiaire', label: 'Tertiaire & Foncières', icon: Building, desc: 'Bureaux, commerce...' },
+                    { id: 'agriculture', label: 'Agriculture', icon: Sprout, desc: 'Exploitation, hangar...' },
+                    { id: 'copro', label: 'Copropriété', icon: Users, desc: 'Syndicat, résidents...' }
                   ].map(role => (
                     <label 
                       key={role.id}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Calculator, Phone, Zap, Sun, Shield, Leaf, BarChart3, ChevronRight, CheckCircle2, Building2, Factory, Stethoscope, Landmark, Sprout, Briefcase, Handshake, PenTool } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useModal } from '../context/ModalContext';
 
@@ -69,9 +70,9 @@ export default function Home() {
                 >
                   Initier une étude <ArrowRight className="w-5 h-5" />
                 </button>
-                <button className="w-full sm:w-auto bg-transparent border-2 border-white/20 text-white font-bold px-8 py-4 rounded-full hover:bg-white hover:text-slate-900 transition-all flex items-center justify-center gap-2 text-base">
+                <Link to="/nos-projets" className="w-full sm:w-auto bg-transparent border-2 border-white/20 text-white font-bold px-8 py-4 rounded-full hover:bg-white hover:text-slate-900 transition-all flex items-center justify-center gap-2 text-base">
                   Voir nos références <ChevronRight className="w-5 h-5" />
-                </button>
+                </Link>
               </motion.div>
             </motion.div>
 
@@ -114,20 +115,26 @@ export default function Home() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { icon: Stethoscope, title: "Santé & Médico-social", desc: "Hôpitaux, cliniques, EHPAD. Consommation continue et diurne idéale pour le solaire." },
-            { icon: Landmark, title: "Collectivités", desc: "Bâtiments publics, écoles, centres sportifs. Exemplarité et maîtrise du budget public." },
-            { icon: Building2, title: "Tertiaire & Foncières", desc: "Bureaux, centres commerciaux. Valorisation des actifs et décret tertiaire." },
-            { icon: Factory, title: "Industrie & Logistique", desc: "Grandes toitures exploitables et consommation intensive pour un ROI rapide." },
-            { icon: Sprout, title: "Agriculture", desc: "Hangars agricoles, serres. Synergie entre exploitation et production d'énergie." },
-            { icon: Briefcase, title: "Copropriétés", desc: "Autoconsommation collective pour réduire les charges des parties communes." }
+            { id: "sante", icon: Stethoscope, title: "Santé & Médico-social", desc: "Hôpitaux, cliniques, EHPAD. Consommation continue et diurne idéale pour le solaire." },
+            { id: "collectivites", icon: Landmark, title: "Collectivités", desc: "Bâtiments publics, écoles, centres sportifs. Exemplarité et maîtrise du budget public." },
+            { id: "tertiaire", icon: Building2, title: "Tertiaire & Foncières", desc: "Bureaux, centres commerciaux. Valorisation des actifs et décret tertiaire." },
+            { id: "industrie", icon: Factory, title: "Industrie & Logistique", desc: "Grandes toitures exploitables et consommation intensive pour un ROI rapide." },
+            { id: "agriculture", icon: Sprout, title: "Agriculture", desc: "Hangars agricoles, serres. Synergie entre exploitation et production d'énergie." },
+            { id: "coproprietes", icon: Briefcase, title: "Copropriétés", desc: "Autoconsommation collective pour réduire les charges des parties communes." }
           ].map((item, idx) => (
-            <div key={idx} className="bg-slate-50 rounded-3xl p-8 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 group">
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-blue-900 text-white group-hover:bg-[#CCFF00] group-hover:text-slate-900 transition-colors">
-                <item.icon className="w-7 h-7" strokeWidth={1.5} />
+            <Link key={idx} to={`/secteurs/${item.id}`} className="bg-slate-50 rounded-3xl p-8 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 group flex flex-col justify-between">
+              <div>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-blue-900 text-white group-hover:bg-[#CCFF00] group-hover:text-slate-900 transition-colors">
+                  <item.icon className="w-7 h-7" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-xl font-bold mb-3 text-slate-900">{item.title}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900">{item.title}</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
-            </div>
+              <div className="mt-6 pt-4 border-t border-slate-200/60 flex items-center justify-between text-xs font-bold text-blue-600 group-hover:text-blue-700">
+                <span>En savoir plus</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
           ))}
         </div>
       </section>

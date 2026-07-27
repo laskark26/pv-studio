@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "description": "",
+  "name": "Écologie Collective",
+  "description": "Opérateur de transition énergétique spécialisé dans les centrales photovoltaïques en autoconsommation collective et PPA pour la santé, l'industrie, les collectivités et le tertiaire.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

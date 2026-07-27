@@ -17,7 +17,7 @@ export default function Footer() {
             Écologie Collective
           </h3>
           <p className="text-slate-400 max-w-sm mb-6">
-            L'opérateur de rénovation énergétique dédié à l'autoconsommation collective en copropriété.
+            Opérateur de transition énergétique dédié aux centrales photovoltaïques en autoconsommation collective et PPA.
           </p>
           <div className="flex gap-4">
             <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">IN</button>
@@ -29,6 +29,7 @@ export default function Footer() {
           <ul className="space-y-3 text-slate-400 text-sm">
             <li><Link to="/a-propos" className="hover:text-white transition-colors">À propos</Link></li>
             <li><Link to="/comprendre-acc" className="hover:text-white transition-colors">Comprendre l'ACC</Link></li>
+            <li><Link to="/secteurs" className="hover:text-white transition-colors">Secteurs</Link></li>
             <li><Link to="/nos-projets" className="hover:text-white transition-colors">Nos projets</Link></li>
             <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
           </ul>

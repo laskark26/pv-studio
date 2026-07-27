@@ -31,10 +31,10 @@ export default function ComprendreACC() {
                 <Network className="w-4 h-4" /> Autoconsommation Collective (ACC)
               </div>
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
-                Le réseau énergétique de demain, <span className="text-[#CCFF00]">déployé aujourd'hui.</span>
+                Le partage d'énergie, <span className="text-[#CCFF00]">simplifié.</span>
               </h1>
               <p className="text-xl text-blue-100 leading-relaxed font-medium mb-10 max-w-3xl">
-                L'autoconsommation collective permet de partager l'électricité produite localement entre plusieurs consommateurs proches. Une révolution réglementaire et technologique qui redessine notre rapport à l'énergie.
+                L'autoconsommation collective (ACC) permet de partager l'électricité solaire avec ses voisins, tout simplement. Une énergie moins chère, plus verte, et 100% locale.
               </p>
               <div className="flex gap-4">
                 <a 
@@ -54,20 +54,20 @@ export default function ComprendreACC() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 tracking-tight">
-              Le principe fondamental :<br/>Un partage virtuel via le réseau public
+              Le principe en 3 mots :<br/>Produire, Partager, Économiser
             </h2>
-            <p className="text-lg text-slate-600 mb-6 leading-relaxed">
-              Contrairement à une installation classique où un bâtiment consomme uniquement sa propre production (autoconsommation individuelle), l'ACC introduit la notion de <strong className="text-slate-900">boucle énergétique locale</strong>.
+            <p className="text-xl text-slate-700 mb-6 leading-relaxed font-medium">
+              L'autoconsommation collective (ACC) permet de créer une <strong className="text-slate-900">boucle énergétique locale</strong>.
             </p>
             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-              L'électricité produite (par exemple via des panneaux photovoltaïques sur le toit d'une usine ou d'un hôpital) est injectée sur le réseau public Enedis. Elle est ensuite répartie virtuellement et facturée aux différents consommateurs participant à l'opération (bâtiments voisins, logements, etc.) en fonction de clés de répartition prédéfinies.
+              Plutôt que de consommer seul son énergie solaire, un producteur (une usine, un hôpital, un hypermarché) partage son électricité avec ses voisins (entreprises, copropriétés...) via le réseau public Enedis. C'est simple, virtuel et sécurisé.
             </p>
             
             <div className="space-y-4">
               {[
-                { title: "Pas de câblage privé", desc: "L'opération utilise l'infrastructure existante (le réseau public de distribution)." },
-                { title: "Comptage intelligent", desc: "Les compteurs communicants (Linky, PME-PMI) mesurent précisément les flux au pas de 30 minutes." },
-                { title: "Traçabilité garantie", desc: "La distribution virtuelle est certifiée et encadrée par le gestionnaire de réseau (Enedis)." }
+                { title: "Pas de câblage privé", desc: "Tout passe par le réseau électrique existant (Enedis)." },
+                { title: "Comptage intelligent", desc: "Les compteurs Linky mesurent précisément l'énergie produite et consommée." },
+                { title: "100% sécurisé", desc: "L'opération est certifiée et encadrée par l'État et Enedis." }
               ].map((item, i) => (
                 <div key={i} className="flex gap-4 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
                   <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
@@ -134,10 +134,10 @@ export default function ComprendreACC() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight mb-6">
-              L'organisation juridique : La PMO
+              L'organisation : La Personne Morale Organisatrice (PMO)
             </h2>
             <p className="text-lg text-slate-600">
-              L'autoconsommation collective exige une structure pour lier les participants. C'est le rôle de la <strong className="text-slate-900">Personne Morale Organisatrice (PMO)</strong>.
+              Pour partager cette énergie, les participants se regroupent au sein d'une structure unique appelée la <strong className="text-slate-900">PMO</strong>. Elle est le chef d'orchestre de l'opération.
             </p>
           </div>
 
@@ -146,9 +146,9 @@ export default function ComprendreACC() {
               <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
                 <FileText className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Statut juridique flexible</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">Une entité juridique</h3>
               <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                La PMO peut prendre différentes formes selon le projet : syndicat des copropriétaires, association, coopérative, bailleur social, ou SAS. Elle est le point de contact unique avec Enedis.
+                Association, coopérative ou syndicat de copropriétaires, la PMO rassemble les producteurs et consommateurs. C'est l'interlocuteur unique d'Enedis.
               </p>
             </div>
             
@@ -156,9 +156,9 @@ export default function ComprendreACC() {
               <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6">
                 <Scale className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Clés de répartition</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">Le partage de l'énergie</h3>
               <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                La PMO définit comment l'énergie est partagée. Les clés de répartition peuvent être <strong className="text-slate-900">statiques</strong> (pourcentage fixe par participant) ou <strong className="text-slate-900">dynamiques</strong> (au prorata de la consommation instantanée).
+                C'est la PMO qui décide comment l'électricité est répartie entre les voisins, selon des règles simples définies ensemble (les clés de répartition).
               </p>
             </div>
 
@@ -166,9 +166,9 @@ export default function ComprendreACC() {
               <div className="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6">
                 <Map className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Périmètre réglementaire</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">Une action ultra-locale</h3>
               <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                La loi limite la distance entre les participants : <strong className="text-slate-900">2 km</strong> en règle générale, extensible à <strong className="text-slate-900">20 km</strong> en zone rurale sur dérogation ministérielle. Puissance max : 3 MWc.
+                Le partage se fait dans un rayon de <strong className="text-slate-900">2 km</strong> (jusqu'à 20 km à la campagne), favorisant les circuits courts de l'énergie.
               </p>
             </div>
           </div>
@@ -180,30 +180,39 @@ export default function ComprendreACC() {
         <div className="flex flex-col md:flex-row gap-12 items-center mb-16">
           <div className="flex-1">
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight mb-6">
-              Pourquoi choisir l'Autoconsommation Collective ?
+              Les 3 grands avantages de l'ACC
             </h2>
           </div>
           <div className="flex-1 text-slate-600 text-lg">
-            Au-delà de l'impact écologique évident, l'ACC répond à des enjeux économiques majeurs pour les acteurs privés et publics.
+            Participer à une boucle énergétique locale, c'est s'assurer une énergie moins chère, plus verte et solidaire.
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           <div className="bg-slate-900 rounded-[2rem] p-10 text-white relative overflow-hidden group">
             <div className="absolute right-0 top-0 w-64 h-64 bg-blue-600/20 rounded-full blur-[80px] group-hover:bg-blue-500/30 transition-colors"></div>
             <ShieldCheck className="w-12 h-12 text-[#CCFF00] mb-6 relative z-10" />
-            <h3 className="text-2xl font-bold mb-4 relative z-10">Bouclier Tarifaire Long Terme</h3>
+            <h3 className="text-2xl font-bold mb-4 relative z-10">Des factures allégées et stables</h3>
             <p className="text-blue-100 relative z-10 leading-relaxed">
-              En fixant le prix de l'électricité produite localement via un contrat long terme (PPA), vous désensibilisez une part importante de votre facture face à l'hyper-volatilité des marchés de l'énergie.
+              Vous consommez une énergie dont le prix est fixé à l'avance, ce qui vous protège des hausses soudaines des prix du marché de l'électricité.
             </p>
           </div>
 
           <div className="bg-slate-900 rounded-[2rem] p-10 text-white relative overflow-hidden group">
             <div className="absolute right-0 top-0 w-64 h-64 bg-emerald-600/20 rounded-full blur-[80px] group-hover:bg-emerald-500/30 transition-colors"></div>
             <Activity className="w-12 h-12 text-[#CCFF00] mb-6 relative z-10" />
-            <h3 className="text-2xl font-bold mb-4 relative z-10">Optimisation des Toitures</h3>
+            <h3 className="text-2xl font-bold mb-4 relative z-10">Zéro gaspillage de toiture</h3>
             <p className="text-blue-100 relative z-10 leading-relaxed">
-              Même si votre bâtiment consomme peu (ex: école en été), l'ACC permet de rentabiliser une grande toiture en vendant ou partageant le surplus avec des voisins gros consommateurs estivaux (ex: supermarché, EHPAD).
+              Si vous avez une grande toiture mais consommez peu (ex: une école en été), l'ACC permet d'en faire profiter vos voisins. Tout le monde y gagne !
+            </p>
+          </div>
+          
+          <div className="bg-slate-900 rounded-[2rem] p-10 text-white relative overflow-hidden group">
+            <div className="absolute right-0 top-0 w-64 h-64 bg-purple-600/20 rounded-full blur-[80px] group-hover:bg-purple-500/30 transition-colors"></div>
+            <Users className="w-12 h-12 text-[#CCFF00] mb-6 relative z-10" />
+            <h3 className="text-2xl font-bold mb-4 relative z-10">Un engagement local fort</h3>
+            <p className="text-blue-100 relative z-10 leading-relaxed">
+              Vous participez activement à la transition énergétique de votre territoire, en créant du lien avec les entreprises et citoyens de votre quartier.
             </p>
           </div>
         </div>
