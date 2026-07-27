@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Zap, Building2, Handshake, ArrowRight, ShieldCheck, Home, ChevronRight } from 'lucide-react';
 import { projects } from '../data/projects';
 import { useModal } from '../context/ModalContext';
+import Seo from '../components/Seo';
 
 // Fix import logic since ShieldCheck wasn't exported in data
 import { Leaf } from 'lucide-react';
@@ -21,6 +22,12 @@ export default function ProjectDetail() {
   if (!project) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-6 text-center">
+        <Seo
+          title="Projet introuvable"
+          description="Le projet que vous recherchez n'existe pas ou a été retiré."
+          canonicalPath="/nos-projets"
+          noIndex
+        />
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Projet introuvable</h1>
         <p className="text-slate-600 mb-8">Le projet que vous recherchez n'existe pas ou a été retiré.</p>
         <button onClick={() => navigate('/nos-projets')} className="bg-blue-900 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-800 transition-colors">
@@ -32,6 +39,12 @@ export default function ProjectDetail() {
 
   return (
     <div className="pt-24 pb-20">
+      <Seo
+        title={`${project.name} — ${project.location}`}
+        description={`Centrale photovoltaïque de ${project.power} kWc — ${project.segment}, ${project.location}. Modèle ${project.model}.`}
+        canonicalPath={`/nos-projets/${project.id}`}
+        image={project.image}
+      />
       {/* Hero section */}
       <div className="max-w-7xl mx-auto px-6 mb-12">
         {/* Breadcrumb Navigation */}

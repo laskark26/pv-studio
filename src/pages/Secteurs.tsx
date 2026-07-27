@@ -2,10 +2,16 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { secteurs } from '../data/secteurs';
+import Seo from '../components/Seo';
 
 export default function Secteurs() {
   return (
     <>
+      <Seo
+        title="Secteurs d'intervention"
+        description="Solutions photovoltaïques en autoconsommation collective et PPA on-site par secteur : santé, collectivités, tertiaire, industrie, agriculture et copropriétés."
+        canonicalPath="/secteurs"
+      />
       {/* Hero Section framed */}
       <div className="p-3 md:p-5">
         <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-slate-900 flex flex-col min-h-[50vh] md:min-h-[60vh]">

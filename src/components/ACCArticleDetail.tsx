@@ -11,8 +11,11 @@ import { useModal } from '../context/ModalContext';
 import { 
   generateArticleBreadcrumbSchema, 
   generateArticleSchema, 
-  generateArticleFAQSchema 
+  generateArticleFAQSchema,
+  parseFrenchDateToISO
 } from '../utils/schemaOrg';
+import Seo from './Seo';
+import { ACC_CANONICAL_PREFIX } from '../utils/routes';
 
 export default function ACCArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -25,6 +28,12 @@ export default function ACCArticleDetail() {
   if (!article) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center p-6">
+        <Seo
+          title="Article non trouvé"
+          description="L'article recherché n'existe pas dans le hub de connaissances ACC."
+          canonicalPath={ACC_CANONICAL_PREFIX}
+          noIndex
+        />
         <h2 className="text-3xl font-bold text-slate-900 mb-4">Article non trouvé</h2>
         <p className="text-slate-600 mb-6">L'article recherché n'existe pas dans le hub de connaissances ACC.</p>
         <Link 
@@ -46,6 +55,13 @@ export default function ACCArticleDetail() {
 
   return (
     <div className="bg-[#F5F5F7] min-h-screen pb-20">
+      <Seo
+        title={article.h1}
+        description={article.summary}
+        canonicalPath={`${ACC_CANONICAL_PREFIX}/${article.slug}`}
+        type="article"
+        modifiedTime={parseFrenchDateToISO(article.lastUpdated)}
+      />
       {/* JSON-LD Structured Data Markup (Schema.org) */}
       <script
         type="application/ld+json"

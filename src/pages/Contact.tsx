@@ -1,12 +1,18 @@
 import React from 'react';
 import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
+import Seo from '../components/Seo';
 
 export default function Contact() {
   const { openModal } = useModal();
 
   return (
     <>
+      <Seo
+        title="Contact"
+        description="Contactez Écologie Collective pour étudier le potentiel solaire de votre site : 01 89 16 45 30 — contact@ecologiecollective.fr. Étude de faisabilité gratuite."
+        canonicalPath="/contact"
+      />
       <div className="p-3 md:p-5">
         <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-slate-900 flex flex-col">
           {/* Background Image with Blue Overlay */}

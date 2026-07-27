@@ -4,6 +4,8 @@ import { Network, Zap, Users, ShieldCheck, FileText, ArrowRight, Search, Filter,
 import { useModal } from '../context/ModalContext';
 import { ACC_ARTICLES, ACC_LEVELS, ACCArticle } from '../data/accArticles';
 import { generateHubBreadcrumbSchema, generateHubFAQSchema } from '../utils/schemaOrg';
+import Seo from '../components/Seo';
+import { ACC_CANONICAL_PREFIX } from '../utils/routes';
 
 export default function ComprendreACC() {
   const { openModal } = useModal();
@@ -47,6 +49,11 @@ export default function ComprendreACC() {
 
   return (
     <>
+      <Seo
+        title="Comprendre l'autoconsommation collective"
+        description="Le guide complet de l'autoconsommation collective : principe, cadre légal, PMO, clés de répartition, raccordement Enedis et rentabilité. 27 articles classés par niveau."
+        canonicalPath={ACC_CANONICAL_PREFIX}
+      />
       {/* JSON-LD Structured Data Markup (Schema.org) */}
       <script
         type="application/ld+json"

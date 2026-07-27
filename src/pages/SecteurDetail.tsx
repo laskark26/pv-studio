@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Home, ChevronRight, Building2 } from 'lucide-react';
 import { secteurs } from '../data/secteurs';
 import { useModal } from '../context/ModalContext';
+import Seo from '../components/Seo';
 
 export default function SecteurDetail() {
   const { id } = useParams();
@@ -18,6 +19,12 @@ export default function SecteurDetail() {
   if (!secteur) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-6 text-center">
+        <Seo
+          title="Secteur introuvable"
+          description="Le secteur que vous recherchez n'existe pas ou a été retiré."
+          canonicalPath="/secteurs"
+          noIndex
+        />
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Secteur introuvable</h1>
         <p className="text-slate-600 mb-8">Le secteur que vous recherchez n'existe pas ou a été retiré.</p>
         <button onClick={() => navigate('/secteurs')} className="bg-blue-900 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-800 transition-colors">
@@ -31,6 +38,12 @@ export default function SecteurDetail() {
 
   return (
     <div className="pt-24 pb-20">
+      <Seo
+        title={`Photovoltaïque ${secteur.title}`}
+        description={secteur.shortDesc}
+        canonicalPath={`/secteurs/${secteur.id}`}
+        image={secteur.image}
+      />
       {/* Hero section */}
       <div className="max-w-7xl mx-auto px-6 mb-12">
         {/* Breadcrumb Navigation */}

@@ -3,6 +3,7 @@ import { ArrowRight, Calculator, Phone, Zap, Sun, Shield, Leaf, BarChart3, Chevr
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import { useModal } from '../context/ModalContext';
 
 export default function Home() {
@@ -26,6 +27,11 @@ export default function Home() {
 
   return (
     <>
+      <Seo
+        title="Écologie Collective — Autoconsommation collective et PPA on-site"
+        description="Opérateur de transition énergétique. Nous concevons, finançons et exploitons des centrales photovoltaïques en autoconsommation collective et en PPA on-site, sans investissement initial."
+        canonicalPath="/"
+      />
       <div className="p-3 md:p-5">
         <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden min-h-[90vh] bg-slate-900 flex flex-col">
           {/* Background Image with Slate Overlay */}

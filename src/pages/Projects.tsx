@@ -2,10 +2,16 @@ import React from 'react';
 import { MapPin, Zap, ArrowRight, Building2, Handshake } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { projects } from '../data/projects';
+import Seo from '../components/Seo';
 
 export default function Projects() {
   return (
     <>
+      <Seo
+        title="Nos projets photovoltaïques"
+        description="Nos réalisations en autoconsommation collective et tiers-investissement : centrales solaires en toiture et ombrières, du secteur hospitalier à l'industrie."
+        canonicalPath="/nos-projets"
+      />
       {/* Hero Section framed */}
       <div className="p-3 md:p-5">
         <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-slate-900 flex flex-col min-h-[60vh] md:min-h-[70vh]">

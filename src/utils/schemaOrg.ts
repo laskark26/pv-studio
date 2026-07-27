@@ -1,3 +1,5 @@
+import { SITE_URL } from './siteUrl';
+
 import { ACCArticle } from '../data/accArticles';
 
 /**
@@ -41,7 +43,7 @@ export function parseFrenchDateToISO(dateStr: string): string {
 /**
  * Generates the BreadcrumbList schema for an Article page.
  */
-export function generateArticleBreadcrumbSchema(article: ACCArticle, baseUrl = 'https://ecologiecollective.fr') {
+export function generateArticleBreadcrumbSchema(article: ACCArticle, baseUrl = SITE_URL) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -77,7 +79,7 @@ export function generateArticleBreadcrumbSchema(article: ACCArticle, baseUrl = '
 /**
  * Generates the Article schema for Schema.org.
  */
-export function generateArticleSchema(article: ACCArticle, baseUrl = 'https://ecologiecollective.fr') {
+export function generateArticleSchema(article: ACCArticle, baseUrl = SITE_URL) {
   const publishedDate = '2026-01-15T08:00:00+01:00';
   const modifiedDate = parseFrenchDateToISO(article.lastUpdated);
 
@@ -172,7 +174,7 @@ export function generateArticleFAQSchema(article: ACCArticle) {
 /**
  * Generates the BreadcrumbList schema for the main Hub page.
  */
-export function generateHubBreadcrumbSchema(selectedLevel?: number | 'all', baseUrl = 'https://ecologiecollective.fr') {
+export function generateHubBreadcrumbSchema(selectedLevel?: number | 'all', baseUrl = SITE_URL) {
   const items = [
     {
       '@type': 'ListItem',

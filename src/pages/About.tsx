@@ -2,12 +2,18 @@ import React from 'react';
 import { Target, Shield, ArrowRight, Zap, Building2, Stethoscope, Factory, Landmark, Sprout, Briefcase, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useModal } from '../context/ModalContext';
+import Seo from '../components/Seo';
 
 export default function About() {
   const { openModal } = useModal();
 
   return (
     <>
+      <Seo
+        title="À propos"
+        description="Écologie Collective, opérateur indépendant de l'autoconsommation collective : ingénieurs en génie électrique, experts en droit de l'énergie et spécialistes du financement."
+        canonicalPath="/a-propos"
+      />
       {/* Hero Section */}
       <div className="p-3 md:p-5">
         <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-blue-900 flex flex-col min-h-[55vh] md:min-h-[65vh]">
