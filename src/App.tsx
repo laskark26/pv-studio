@@ -6,6 +6,7 @@ import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import Contact from './pages/Contact';
 import ComprendreACC from './pages/ComprendreACC';
+import ACCArticleDetail from './components/ACCArticleDetail';
 import Secteurs from './pages/Secteurs';
 import SecteurDetail from './pages/SecteurDetail';
 import Footer from './components/Footer';
@@ -34,6 +35,9 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/a-propos" element={<About />} />
             <Route path="/comprendre-acc" element={<ComprendreACC />} />
+            <Route path="/comprendre-acc/:slug" element={<ACCArticleDetail />} />
+            <Route path="/autoconsommation-collective" element={<ComprendreACC />} />
+            <Route path="/autoconsommation-collective/:slug" element={<ACCArticleDetail />} />
             <Route path="/nos-projets" element={<Projects />} />
             <Route path="/nos-projets/:id" element={<ProjectDetail />} />
             <Route path="/secteurs" element={<Secteurs />} />
