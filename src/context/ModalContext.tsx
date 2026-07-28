@@ -4,18 +4,34 @@ interface ModalContextType {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
+  isSimulationModalOpen: boolean;
+  openSimulationModal: () => void;
+  closeSimulationModal: () => void;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSimulationModalOpen, setIsSimulationModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const openSimulationModal = () => setIsSimulationModalOpen(true);
+  const closeSimulationModal = () => setIsSimulationModalOpen(false);
+
   return (
-    <ModalContext.Provider value={{ isModalOpen, openModal, closeModal }}>
+    <ModalContext.Provider 
+      value={{ 
+        isModalOpen, 
+        openModal, 
+        closeModal,
+        isSimulationModalOpen,
+        openSimulationModal,
+        closeSimulationModal
+      }}
+    >
       {children}
     </ModalContext.Provider>
   );

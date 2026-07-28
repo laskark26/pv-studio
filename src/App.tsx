@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import { ModalProvider } from './context/ModalContext';
 import StudyModal from './components/StudyModal';
+import SimulationModal from './components/SimulationModal';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -46,6 +47,7 @@ export default function App() {
           </Routes>
           <Footer />
           <StudyModal />
+          <SimulationModal />
         </div>
       </BrowserRouter>
     </ModalProvider>
